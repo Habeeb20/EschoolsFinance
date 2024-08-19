@@ -9,6 +9,7 @@ import Home from './pages/Home';
 import Navbar from './component/Navbar';
 import Login from './pages/Login';
 import Sigup from './pages/signup';
+import ExpHome from './pages/ExpHome';
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
         <Routes>
           
           <Route path='/' element={user ? <Home /> : <Navigate to='/login' />} />
+          <Route path='/exp' element={user ? <ExpHome /> : <Navigate to='/login' />} />
           <Route path='/login' element={!user ? <Login /> : <Navigate to='/' />} />
           <Route path='/signup' element={!user ? <Sigup /> : <Navigate to='/' />} />
             

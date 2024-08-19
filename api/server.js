@@ -14,7 +14,9 @@ const PORT = process.env.PORT || 4000;
 const {logEvents, loggers} = require('./middleware/logger')
 const workout = require('./route/workout')
 const userWorkout = require('./route/user')
-const corsOptions = require('./config/corsOptions')
+const exp = require('./route/expense')
+const corsOptions = require('./config/corsOptions');
+const summaryrouter = require('./route/financeSummary');
 
 // const __dirname = path.resolve()
 
@@ -31,7 +33,8 @@ app.use(express.static('public'))
 
 app.use("/api/workout", workout)
 app.use("/api/user", userWorkout)
-
+app.use("/api", exp)
+app.use('/api', summaryrouter)
 
 
 app.use(express.static(path.join(__dirname, '/client/dist')))

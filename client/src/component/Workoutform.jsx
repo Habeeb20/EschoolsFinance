@@ -53,9 +53,9 @@ const Workoutform = () => {
 
   return (
     <form className="create" onSubmit={handleSubmit} action="">
-      <h3>Add a new Workout</h3>
+      <h3>Add a new Income details</h3>
 
-      <label htmlFor="">Exercise title</label>
+      <label htmlFor="">Name</label>
       <input
         type="text"
         onChange={(e) => setTitle(e.target.value)}
@@ -63,7 +63,7 @@ const Workoutform = () => {
         className={emptyField?.includes('title') ? 'error' : ''}
       />
 
-      <label htmlFor="">Load (in kg):</label>
+      <label htmlFor="">Amount:</label>
       <input
         type="number"
         onChange={(e) => setLoads(e.target.value)}
@@ -71,7 +71,7 @@ const Workoutform = () => {
         className={emptyField?.includes('loads') ? 'error' : ''}
       />
 
-      <label htmlFor="">Reps:</label>
+      <label htmlFor="">Purpose</label>
       <input
         type="text"
         onChange={(e) => setReps(e.target.value)}
@@ -79,7 +79,7 @@ const Workoutform = () => {
         className={emptyField?.includes('reps') ? 'error' : ''}
       />
 
-      <button>Add workout</button>
+      <button>Add details</button>
       {error && <div className="error">{error}</div>}
     </form>
   );
