@@ -97,6 +97,8 @@ import { Link } from 'react-router-dom';
 
 
 const Home = () => {
+
+ 
     const { workout, dispatch } = useWorkoutContext();
     const { user } = useAuthContext();
     const [totalAmount, setTotalAmount] = useState(0);
@@ -119,27 +121,38 @@ const Home = () => {
                 if (response.ok) {
                     const json = await response.json();
 
+
                     // Check if the response data is an array
                     if (Array.isArray(json)) {
                         dispatch({ type: 'set_workout', payload: json });
-                        calculateTotalAndBalance(json); // Calculate total and balance
+                        // calculateTotalAndBalance(json); // Calculate total and balance
                     } else {
                         console.error('Unexpected data format received from the server:', json);
                     }
                 } else {
                     console.error('Failed to fetch workouts:', response.statusText);
                 }
+                const totalResponse = await fetch('http://localhost:4000/api/workout/total', {
+                    headers: {
+                        'Authorization': `Bearer ${user.token}`
+                    }
+                });
+                const totalIncomeJson = await totalResponse.json();
+                setTotalAmount(totalIncomeJson.totalIncome);
+
+                const balance = totalIncomeJson.totalIncome - totalExpenditureJson.totalExpenditure;
+                setBalance(balance);
             } catch (error) {
                 console.error('Error fetching workouts:', error);
             }
 
             try {
-                const summary = await fetch('http://localhost:4000/api/summary', {
+                const summarys = await fetch('http://localhost:4000/api/summary', {
                     headers: {
                         'Authorization': `Bearer ${user.token}`
                     }
                 });
-                setSummary(summary.data)
+                setSummary(summarys.data)
             } catch (error) {
                 
             }
@@ -149,11 +162,11 @@ const Home = () => {
 
     }, [dispatch, user]);
 
-    const calculateTotalAndBalance = (workouts) => {
-        const total = workouts.reduce((acc, workout) => acc + workout.loads, 0);
-        setTotalAmount(total);
-        setBalance(total); // Assuming balance is initially the total amount
-    };
+    // const calculateTotalAndBalance = (workouts) => {
+    //     const total = workouts.reduce((acc, workout) => acc + workout.loads, 0);
+    //     setTotalAmount(total);
+    //     setBalance(total); // Assuming balance is initially the total amount
+    // };
 
     const handleDelete = (deletedWorkout) => {
         dispatch({ type: 'delete_workout', payload: deletedWorkout });
@@ -171,18 +184,15 @@ const Home = () => {
 
     return (
         <div className="home">
-            {/* <p>{summary.totalAmountPaid}</p> */}
+
             <div className="workout">
                 {Array.isArray(workout) && workout.map((workout) => (
                     <WorkoutDetails key={workout._id} workout={workout} onDelete={handleDelete} />
                 ))}
             </div>
-            {/* <div>
-                <h4>Total Amount: {totalAmount}</h4>
-                <h4>Balance: {balance}</h4>
-            </div> */}
+         
             <Workoutform />
-            <Link to='/exp'><button>add expenses</button></Link>
+        
         </div>
     );
 };

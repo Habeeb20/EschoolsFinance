@@ -9,8 +9,8 @@ summaryrouter.use(requireAuth)
 summaryrouter.get('/summary', async(req, res) => {
     const {id} = req.params
     try {
-        const student = await income.findById(id)
-        const expenditure = await expense.findById(id)
+        const student = await income.find({userId: req.userId})
+        const expenditure = await expense.find({userId: req.userId})
 
         const totalAmountPaid = student.reduce((sum, stud)=> sum + stud.reps, 0);
         const totalExpenditure = expenditure.reduce((sum, exp) => sum + exp.amount, 0);

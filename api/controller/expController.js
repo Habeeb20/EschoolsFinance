@@ -32,6 +32,17 @@ const createExpenditure = async(req, res) => {
     }
 
 }
+const getTotalExpenditure = async (req, res) => {
+    try {
+        const user_id = req.user._id;
+        const expenses = await Exp.find({ user_id });
+        const totalExpenditure = expenses.reduce((acc, exp) => acc + parseFloat(exp.amount), 0);
+        res.status(200).json({ totalExpenditure });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
 
 const getExpenditure = async(req, res) => {
     try {
@@ -109,7 +120,8 @@ module.exports = {
     getAllExpenses,
     getExpenditure,
     deleteExpenses,
-    updateExpenses
+    updateExpenses,
+    getTotalExpenditure
 }
 
 

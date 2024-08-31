@@ -2,8 +2,21 @@ import React from "react";
 import { useState } from "react";
 import { useWorkoutContext } from "../hooks/useWorkoutContext";
 import { useAuthContext } from "../hooks/useAuthContext";
-
+import { Link } from "react-router-dom";
 const Workoutform = () => {
+
+  const styles = {
+       
+    background: '#1aac83',
+    border: 0,
+    color: '#fff',
+    padding: '10px',
+    fontFamily: "Poppins",
+    borderRadius: '4px',
+    cursor: "pointer",
+    marginLeft:"5%"
+ 
+}
   const { dispatch } = useWorkoutContext()
   const {user} = useAuthContext()
 
@@ -80,6 +93,7 @@ const Workoutform = () => {
       />
 
       <button>Add details</button>
+      <Link to='/exp'><button style={styles}>check expenses</button></Link>
       {error && <div className="error">{error}</div>}
     </form>
   );

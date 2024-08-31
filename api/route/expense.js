@@ -11,6 +11,6 @@ exprouter.get('/exp/:id', expController.getExpenditure)
 exprouter.post('/exp', expController.createExpenditure)
 exprouter.delete('/exp/:id', expController.deleteExpenses)
 exprouter.patch('exp/:id', expController.updateExpenses)
-
+exprouter.get('/exp/total', expController.getTotalExpenditure)
 
 module.exports = exprouter

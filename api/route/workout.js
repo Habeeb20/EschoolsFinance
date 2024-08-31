@@ -11,7 +11,7 @@ router.get('/:id', controller.getWorkout)
 router.post('/', controller.createWorkout)
 router.delete('/:id', controller.deleteWorkout)
 router.patch('/:id', controller.updateWorkout)
-
+router.get('/total', controller.getTotalIncome)
 
 module.exports= router
 

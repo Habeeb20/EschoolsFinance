@@ -52,6 +52,17 @@ const getWorkout = async(req, res) => {
         
     }
 }
+const getTotalIncome = async (req, res) => {
+    try {
+        const user_id = req.user._id;
+        const incomes = await Workout.find({ user_id });
+        const totalIncome = incomes.reduce((acc, income) => acc + parseFloat(income.loads), 0);
+        res.status(200).json({ totalIncome });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
 
 const getAllWorkout = async (req, res) => {
     try {
@@ -109,5 +120,6 @@ module.exports = {
     getAllWorkout,
     getWorkout,
     deleteWorkout,
-    updateWorkout
+    updateWorkout,
+    getTotalIncome
 }
